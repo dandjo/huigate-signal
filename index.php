@@ -45,11 +45,11 @@
             </div>
         </div>
         <script>
-            var changeHtml = function(elemId, value, min, max) {
-                perc = (1 + (parseInt(value.replace(/>=/, '').replace(/<=/, '')) - max) / (max - min)) * 100;
+            var updateProgressBar = function(elemId, value, min, max) {
+                var perc = (1 + (parseInt(value.replace(/>=/, '').replace(/<=/, '')) - max) / (max - min)) * 100;
                 $('#' + elemId).css('width', perc + '%').attr('aria-valuenow', perc).text(value).removeClass(function(index, classes) {
                     return classes.split(/\s+/).filter(function(c) {
-                        regex = new RegExp('progress-bar-(danger|warning|info|success)');
+                        var regex = new RegExp('progress-bar-(danger|warning|info|success)');
                         return regex.test(c);
                     }).join(' ');
                 }).addClass(function(index, classes) {
@@ -67,14 +67,14 @@
             };
 
             setInterval(function() {
-                $.get('/huawei-signal.php', function(data) {
+                $.get('<?php echo $http_root ?>/api/signal.php', function(data) {
                     $('#cell_id').text(data.getElementsByTagName('cell_id')[0].childNodes[0].nodeValue);
                     var ids = ['rsrq', 'rsrp', 'sinr', 'rssi'];
                     var mins = [-20, -110, 0, -113];
                     var maxs = [-3, -70, 30, -51];
                     for (var i = 0; i < ids.length; i++) {
                         var elemValue = data.getElementsByTagName(ids[i])[0].childNodes[0].nodeValue;
-                        changeHtml(ids[i], elemValue, mins[i], maxs[i]);
+                        updateProgressBar(ids[i], elemValue, mins[i], maxs[i]);
                     }
                 });
             }, 1000);
