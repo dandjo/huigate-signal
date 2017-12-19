@@ -70,7 +70,7 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
             };
 
             setInterval(function() {
-                $.get('<?php echo CONFIG['http_root']; ?>/api/signal.php', function(data) {
+                $.get('<?php echo CONFIG_HTTP_ROOT; ?>/api/signal.php', function(data) {
                     $('#cell_id').text(data.getElementsByTagName('cell_id')[0].childNodes[0].nodeValue);
                     var ids = ['rsrq', 'rsrp', 'sinr', 'rssi'];
                     var mins = [-20, -110, 0, -113];
