@@ -1,3 +1,6 @@
+<?php
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,11 +9,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <title>Huawei Signal</title>
+        <title>HuiGate Signal</title>
     </head>
     <body>
         <div class="container">
-            <h1>Huawei Signal (CellID: <span id="cell_id"></span>)</h1>
+            <h1>HuiGate Signal (CellID: <span id="cell_id"></span>)</h1>
             <h4>RSRQ <span style="font-size: 90%;">(Reference Signal Received Quality)</span></h4>
             <h5>-20dB to -3dB</h5>
             <div class="progress">
