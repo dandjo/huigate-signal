@@ -4,3 +4,7 @@
  * of this project is located.
  */
 define('CONFIG_HTTP_ROOT', '/huigate');
+/*
+ * The interval in microseconds to poll the api.
+ */
+define('CONFIG_POLL_INTERVAL', 1000);

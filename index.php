@@ -64,7 +64,7 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
                     }
                     if (perc < 75) {
                         return 'progress-bar-info';
-                    } 
+                    }
                     return 'progress-bar-success';
                 });
             };
@@ -80,7 +80,7 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
                         updateProgressBar(ids[i], elemValue, mins[i], maxs[i]);
                     }
                 });
-            }, 1000);
-        </script>
+            }, <?php echo CONFIG_POLL_INTERVAL; ?>);
+	</script>
     </body>
 </html>
