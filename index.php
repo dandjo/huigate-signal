@@ -71,13 +71,12 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
 
             setInterval(function() {
                 $.get('<?php echo CONFIG_HTTP_ROOT; ?>/api/signal.php', function(data) {
-                    $('#cell_id').text(data.getElementsByTagName('cell_id')[0].childNodes[0].nodeValue);
                     var ids = ['rsrq', 'rsrp', 'sinr', 'rssi'];
                     var mins = [-20, -110, 0, -113];
                     var maxs = [-3, -70, 30, -51];
+                    $('#cell_id').text(data['cell_id']);
                     for (var i = 0; i < ids.length; i++) {
-                        var elemValue = data.getElementsByTagName(ids[i])[0].childNodes[0].nodeValue;
-                        updateProgressBar(ids[i], elemValue, mins[i], maxs[i]);
+                        updateProgressBar(ids[i], data[ids[i]], mins[i], maxs[i]);
                     }
                 });
             }, <?php echo CONFIG_POLL_INTERVAL; ?>);

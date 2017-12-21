@@ -11,7 +11,9 @@ ob_start(); // prevent any output
 curl_exec ($ch);
 ob_end_clean();
 if (curl_error($ch)) {
+    header('Content-Type: text/plain');
     echo curl_error($ch);
+    exit;
 }
 curl_close($ch);
 unset($ch);
@@ -23,11 +25,13 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_COOKIEFILE, "/tmp/cookie.txt");
 $data = curl_exec($ch);
 if (curl_error($ch)) {
+    header('Content-Type: text/plain');
     echo curl_error($ch);
+    exit;
 }
+curl_close($ch);
 
 // output
-header('Content-Type: text/xml');
-echo $data;
-curl_close($ch);
+header('Content-Type: application/json');
+echo json_encode(simplexml_load_string($data));
 ?>
