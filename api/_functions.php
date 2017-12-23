@@ -22,7 +22,7 @@ $signal = function() {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_COOKIEFILE, CONFIG_COOKIE_FILE);
     ob_start(); // prevent any output
-    $xml = str_replace(array("\n", "\r"), '', curl_exec($ch));
+    $xml = str_replace(["\n", "\r"], '', curl_exec($ch));
     ob_end_clean();
     if (curl_error($ch)) {
         return curl_error($ch);
