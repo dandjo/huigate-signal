@@ -22,16 +22,27 @@ header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');
 header('Content-Type: application/json');
 
-$xml = signal();
-if (mb_strpos($xml, '<error>') !== false) {
-    parse_csrf_token();
+$data = [];
+$iterations = CONFIG_POLLS_PER_REQUEST;
+
+for ($i = 0; $i < $iterations; $i++) {
     $xml = signal();
-};
+    if (mb_strpos($xml, '<error>') !== false) {
+        parse_csrf_token();
+        $xml = signal();
+    }
+    $data['cell_id'] = parse_xml_value($xml, 'cell_id');
+    $data['rsrq'] += filter_var(parse_xml_value($xml, 'rsrq'), FILTER_SANITIZE_NUMBER_FLOAT);
+    $data['rsrp'] += filter_var(parse_xml_value($xml, 'rsrp'), FILTER_SANITIZE_NUMBER_FLOAT);
+    $data['sinr'] += filter_var(parse_xml_value($xml, 'sinr'), FILTER_SANITIZE_NUMBER_FLOAT);
+    $data['rssi'] += filter_var(parse_xml_value($xml, 'rssi'), FILTER_SANITIZE_NUMBER_FLOAT);
+}
+
 echo json_encode([
-    'cell_id' => parse_xml_value($xml, 'cell_id'),
-    'rsrq' => parse_xml_value($xml, 'rsrq'),
-    'rsrp' => parse_xml_value($xml, 'rsrp'),
-    'sinr' => parse_xml_value($xml, 'sinr'),
-    'rssi' => parse_xml_value($xml, 'rssi'),
+    'cell_id' => $data['cell_id'],
+    'rsrq' => round($data['rsrq'] / $iterations, 2),
+    'rsrp' => round($data['rsrp'] / $iterations, 2),
+    'sinr' => round($data['sinr'] / $iterations, 2),
+    'rssi' => round($data['rssi'] / $iterations, 2),
 ]);
 ?>

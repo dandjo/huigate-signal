@@ -13,6 +13,6 @@ define('CONFIG_HTTP_ROOT', '/huigate');
  */
 define('CONFIG_ROUTER_HTTP_ROOT', 'http://homerouter.cpe');
 /*
- * The interval in microseconds to poll the api.
+ * The interval the api polls the router api.
  */
-define('CONFIG_POLL_INTERVAL', 1000);
+define('CONFIG_POLLS_PER_REQUEST', 10);
